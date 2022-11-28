@@ -1,0 +1,10 @@
+*.pem
+*.py[cod]
+
+.idea/
+venv/
+user_data/
+__pycache__/
+
+test_wallets.json
+wallets.json
