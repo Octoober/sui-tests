@@ -1,4 +1,4 @@
-from utils.browser import Browser
+import itertools
 
 from tasks.sui.menu.account import Account
 from tasks.sui.menu.network import Network
@@ -7,10 +7,14 @@ from tasks.sui.new_account import NewAccount
 from tasks.sui.menu.items import Items
 from tasks.sui.wallet_info import WalletInfo
 
+from tasks import Extension
+
 from utils.random_sleep import random_sleep
 
 from apps import APPS
+from utils.browser import Browser
 from _helpers import save_wallet, create_default_wallets_file
+from settings import COUNT
 
 
 def main():
@@ -20,6 +24,11 @@ def main():
     driver = browser.driver
     driver.get(browser.start_page)
 
+    # Check and install extension
+    extension = Extension(driver).open()
+    extension.install()
+
+    # Unlock
     unlock_wallet = UnlockWallet(driver)
     unlock_wallet.unlock()
 
@@ -27,7 +36,9 @@ def main():
         Account(driver).open().logout()
         random_sleep(0.3, 1.5)
 
-    for i in range(10):
+    count = range(COUNT) if COUNT > 0 else itertools.count(0)
+
+    for _ in count:
         random_sleep(0.3, 1.5)
         # Create new account
         new_account = NewAccount(driver).open()

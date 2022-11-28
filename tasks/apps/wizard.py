@@ -6,13 +6,11 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from tasks.task import TaskBase
+from core.task import TaskBase
 from tasks.sui.popup import Popup
-from utils.locations.sui import ConnectWallet
 from utils.random_sleep import random_sleep
 from utils.locations.apps.wizard import Home
-from constants import PASSWORD, PERSONAL_SUI_URL, SuiUrlParams
-from settings import RANDOM_SLEEP, PASSWORD
+from settings import RANDOM_SLEEP
 
 
 class Wizard(TaskBase):

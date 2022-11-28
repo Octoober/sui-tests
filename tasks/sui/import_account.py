@@ -4,7 +4,7 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from tasks.task import TaskBase
+from core.task import TaskBase
 from utils.locations.sui import ImportAccount as ImportAccountElements
 from utils.random_sleep import random_sleep
 from constants import PASSWORD, PERSONAL_SUI_URL, SuiUrlParams

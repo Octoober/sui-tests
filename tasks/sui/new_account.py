@@ -6,10 +6,9 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from utils.locations.sui import Register
 from utils.random_sleep import random_sleep
-from tasks.task import TaskBase
+from core.task import TaskBase
 
 from constants import (PASSWORD,
-                       WALLETS_JSON_FILE,
                        PERSONAL_SUI_URL,
                        SuiUrlParams)
 

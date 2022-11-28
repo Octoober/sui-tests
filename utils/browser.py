@@ -17,7 +17,7 @@ class Browser:
     @staticmethod
     def __options() -> Options:
         chrome_options = Options()
-        chrome_options.add_argument(f'user-data-dir={USER_DATA_PATH}')
+        # chrome_options.add_argument(f'user-data-dir={USER_DATA_PATH}')
 
         return chrome_options
 

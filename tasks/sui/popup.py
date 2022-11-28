@@ -4,9 +4,9 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from tasks.task import TaskBase
+from core.task import TaskBase
 from utils.locations.sui import ConnectWallet
-from constants import PASSWORD, PERSONAL_SUI_URL, SuiUrlParams
+from constants import PERSONAL_SUI_URL, SuiUrlParams
 
 from utils.random_sleep import random_sleep
 from settings import RANDOM_SLEEP

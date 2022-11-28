@@ -5,11 +5,11 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.common.exceptions import TimeoutException
 
-from tasks.task import TaskBase
+from core.task import TaskBase
 from utils.locations.sui import Menu
 from utils.random_sleep import random_sleep
 
-from constants import PASSWORD, PERSONAL_SUI_URL, SuiUrlParams
+from constants import PERSONAL_SUI_URL, SuiUrlParams
 from settings import RANDOM_SLEEP
 
 
