@@ -18,7 +18,7 @@ class Register:
     PRIVACY_CHECKBOX = (By.XPATH, '//*[@id="root"]/div/div/form/div/fieldset/label[3]/span[1]')
 
     # **** DIVS ****
-    RECOVERY_PHRASE_DIV = (By.XPATH, "/html/body/div/div/div/div[2]")
+    RECOVERY_PHRASE_DIV = (By.CSS_SELECTOR, "#root > div > div > div.FcQQKvA6jyUfX4nnitAd")
 
 
 class ImportAccount:

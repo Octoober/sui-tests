@@ -11,6 +11,8 @@ from utils.random_sleep import random_sleep
 from constants import PASSWORD
 from settings import RANDOM_SLEEP
 
+import logging
+
 
 class UnlockWallet(TaskBase):
     def __init__(self, driver: WebDriver) -> NoReturn:
@@ -24,7 +26,7 @@ class UnlockWallet(TaskBase):
     def __is_locked_walled(self) -> NoReturn:
         random_sleep(*RANDOM_SLEEP)
         try:
-            WebDriverWait(self._driver, 1).until(EC.presence_of_element_located(LockWallet.TITLE_TEXT))
+            WebDriverWait(self._driver, 10).until(EC.presence_of_element_located(LockWallet.TITLE_TEXT))
         except TimeoutException:
             self._locked = False
             return False

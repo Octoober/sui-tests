@@ -15,20 +15,22 @@ class Extension(TaskBase):
     def __init__(self, driver: WebDriver):
         super(Extension, self).__init__(driver)
 
-        self._exist = False
+        self._is_installed = False
         self.url = SUI_EXTENSION_URL
 
     def install(self):
         main_tab = self.driver.current_window_handle
 
         try:
-            add_to_chrome_button = WebDriverWait(self._driver, 10).until(
+            add_to_chrome_button = WebDriverWait(self._driver, 5).until(
                 EC.presence_of_element_located(chrome_store.ADD_TO_CHROME_BUTTON))
 
             random_sleep(*RANDOM_SLEEP)
             add_to_chrome_button.click()
         except TimeoutException:
             print('ADD_TO_CHROME_BUTTON not found')
+            self._is_installed = True
+            return
 
         try:
             WebDriverWait(self._driver, 300).until(
@@ -48,4 +50,4 @@ class Extension(TaskBase):
         except TimeoutException:
             pass
 
-        self._exist = True
+        self._is_installed = True

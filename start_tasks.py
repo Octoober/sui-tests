@@ -1,4 +1,6 @@
+import os
 import itertools
+import logging
 
 from tasks.sui.menu.account import Account
 from tasks.sui.menu.network import Network
@@ -15,6 +17,12 @@ from apps import APPS
 from utils.browser import Browser
 from _helpers import save_wallet, create_default_wallets_file
 from settings import COUNT
+from constants import USER_DATA_PATH
+
+
+logger = logging.getLogger('main')
+logger.setLevel(logging.DEBUG)
+logger.addHandler(logging.StreamHandler())
 
 
 def main():
@@ -24,13 +32,15 @@ def main():
     driver = browser.driver
     driver.get(browser.start_page)
 
-    # Check and install extension
-    extension = Extension(driver).open()
-    extension.install()
+    if not os.path.exists(USER_DATA_PATH):
+        # Check and install extension
+        extension = Extension(driver).open()
+        extension.install()
 
     # Unlock
     unlock_wallet = UnlockWallet(driver)
     unlock_wallet.unlock()
+    logger.debug('wallet is lock' if unlock_wallet.is_locked_wallet else 'wallet unlock')
 
     if unlock_wallet.is_locked_wallet:
         Account(driver).open().logout()

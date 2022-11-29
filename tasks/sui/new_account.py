@@ -58,6 +58,7 @@ class NewAccount(TaskBase):
         open_sui_wallet_button = WebDriverWait(self._driver, 10).until(
             EC.presence_of_element_located(Register.OPEN_SUI_WALLET_BUTTON))
 
+        random_sleep(*RANDOM_SLEEP)
         recovery_phrase = str(recovery_phrase_div.text).split('\n')[0]
         self._recovery_phrase = recovery_phrase
 
