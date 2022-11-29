@@ -27,13 +27,16 @@ logger.addHandler(logging.StreamHandler())
 
 def main():
     create_default_wallets_file()
+    is_cold_start = not os.path.exists(USER_DATA_PATH)
 
     browser = Browser()
     driver = browser.driver
     driver.get(browser.start_page)
 
-    if not os.path.exists(USER_DATA_PATH):
+    if is_cold_start:
         # Check and install extension
+        logger.debug(f'not found user_data: {USER_DATA_PATH}')
+        logger.debug('add extension...')
         extension = Extension(driver).open()
         extension.install()
 
