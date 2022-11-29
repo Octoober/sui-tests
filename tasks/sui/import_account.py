@@ -17,18 +17,10 @@ class ImportAccount(TaskBase):
         self._url = PERSONAL_SUI_URL + SuiUrlParams.IMPORT_ACCOUNT
         self._phrase = ''
 
-    def open(self):
-        random_sleep(*RANDOM_SLEEP)
-        self._driver.get(self._url)
-        return self
-
-    # @property
-    # def phrase(self):
-    #     return self._phrase
-    #
-    # @phrase.setter
-    # def phrase(self, value: str) -> NoReturn:
-    #     self._phrase = value
+    # def open(self):
+    #     random_sleep(*RANDOM_SLEEP)
+    #     self._driver.get(self._url)
+    #     return self
 
     def send_recovery_phrase(self, phrase: str) -> NoReturn:
         recovery_phrase_input = WebDriverWait(self._driver, 10).until(

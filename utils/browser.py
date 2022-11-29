@@ -6,7 +6,8 @@ from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from constants import USER_DATA_PATH, PERSONAL_SUI_URL, SuiUrlParams, SUI_EXTENSION_URL
+from constants import PERSONAL_SUI_URL, SuiUrlParams, SUI_EXTENSION_URL, SUI_EXTENSION_PATH
+from settings import HEADLESS
 
 
 class Browser:
@@ -17,7 +18,11 @@ class Browser:
     @staticmethod
     def __options() -> Options:
         chrome_options = Options()
-        chrome_options.add_argument(f'user-data-dir={USER_DATA_PATH}')
+        chrome_options.add_extension(SUI_EXTENSION_PATH)
+
+        if HEADLESS:
+            chrome_options.add_argument('headless')
+        # chrome_options.add_argument(f'user-data-dir={USER_DATA_PATH}')
 
         return chrome_options
 

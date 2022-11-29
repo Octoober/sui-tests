@@ -7,7 +7,7 @@ from PyQt6.QtWidgets import (QApplication,
                              QTableWidget, QTableWidgetItem)
 from PyQt6.QtCore import QSize
 
-from _helpers import get_wallets
+from helpers import get_wallets
 
 
 class MainWindow(QWidget):

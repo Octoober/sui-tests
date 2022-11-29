@@ -1,13 +1,20 @@
-from tasks.apps.wizard import Wizard
-from tasks.apps.sui_nft import SuiNft
+from tasks.apps import Wizard, SuiNft, EthosGame, Cleo
 
 APPS = [
     {
-        "context": Wizard,
+        "worker": EthosGame,
+        "url": "https://ethoswallet.github.io/2048-demo/"
+    },
+    {
+        "worker": Cleo,
+        "url": "https://cleo-mint.vercel.app/"
+    },
+    {
+        "worker": Wizard,
         "url": "https://test-wizardland.vercel.app/"
     },
     {
-        "context": SuiNft,
+        "worker": SuiNft,
         "url": "https://sui-wallet-demo.sui.io/"
-    }
+    },
 ]
