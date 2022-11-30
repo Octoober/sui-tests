@@ -27,21 +27,17 @@ class SuiNft(TaskBase):
     def __init__(self, driver: WebDriver, url: str) -> NoReturn:
         super().__init__(driver)
         self._url = url
-        self._name = random.choice(_word_list)
-        self._description = random.choice(_word_list)
         self._url_nft = "https://picsum.photos/400"
 
-    def open(self):
-        random_sleep(*RANDOM_SLEEP)
-        self._driver.get(self._url)
-        return self
+    def run_tasks(self, iteration: int = 0):
+        if iteration == 0:
+            self.connecting()
 
-    def run_tasks(self):
-        self.connecting()
-        self.write_name()
-        self.write_description()
-        self.write_image_url()
-        self.minting()
+        for i in range(7):
+            self.write_name()
+            self.write_description()
+            self.write_image_url()
+            self.minting()
 
     def connecting(self):
         connect_button = WebDriverWait(self._driver, 10).until(
@@ -52,25 +48,27 @@ class SuiNft(TaskBase):
         self.connect_task()
 
     def write_name(self):
+        name_text = random.choice(_word_list)
         name_input = WebDriverWait(self._driver, 20).until(
             EC.presence_of_element_located(Home.NAME_INPUT))
 
-        for letter in self._name:
+        for letter in name_text:
             name_input.send_keys(letter)
             random_sleep(*RANDOM_SLEEP_WRITE)
 
     def write_description(self):
+        description_text = random.choice(_word_list)
         description_input = WebDriverWait(self._driver, 20).until(
             EC.presence_of_element_located(Home.DESCRIPTION_INPUT))
 
-        for letter in self._name:
+        for letter in description_text:
             description_input.send_keys(letter)
             random_sleep(*RANDOM_SLEEP_WRITE)
 
     def write_image_url(self):
         image_url_input = WebDriverWait(self._driver, 20).until(
             EC.presence_of_element_located(Home.IMAGE_URL_INPUT))
-        image_url_input.send_keys(self._url)
+        image_url_input.send_keys(self._url_nft)
 
     def minting(self):
         create_button = WebDriverWait(self._driver, 20).until(

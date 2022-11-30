@@ -40,7 +40,8 @@ class SuiHome:
     # **** LINKS ****
     MAIN_MENU_LINK = (By.XPATH, "/html/body/div/div/div/div[1]/a[2]")
     NETWORK_LIST_LINK = (By.XPATH, "/html/body/div/div/div/div[2]/div/div[2]/div/a[2]")
-    WALLET_HASH_DIV = (By.CSS_SELECTOR, "#root > div > div > div.wOjQeIStBhElmmumhY7o > main > div > span > span > span")
+    WALLET_HASH_DIV = (
+    By.CSS_SELECTOR, "#root > div > div > div.wOjQeIStBhElmmumhY7o > main > div > span > span > span")
 
 
 class LockWallet:
@@ -52,6 +53,7 @@ class LockWallet:
 class Menu:
     REQUEST_SUI_TOKENS_BUTTON = (By.XPATH, "/html/body/div/div/div/div[2]/div/div[2]/div/div[2]/button[1]")
     REQUEST_IN_PROGRESS_DIV = (By.XPATH, "/html/body/div/div/div/div[2]/div/div[2]/div/div[3]")
+
     # REQUEST_STATE_RECIVED = ()
 
     class Account:
@@ -64,3 +66,9 @@ class Menu:
 class ConnectWallet:
     CONNECT_BUTTON = (By.XPATH, "/html/body/div/div/div/div[2]/main/div/div[2]/div/button[2]")
     APPROVE_BUTTON = (By.XPATH, "/html/body/div/div/div/div[2]/main/div/div[2]/div/button[2]")
+
+
+class SubBar:
+    class Apps:
+        MINT_AN_NFT_BUTTON = (By.XPATH, "//button[contains(@class, 'qvmPyb8NdzsMrFWoHAEN')]")
+        MINT_AN_NFT_SPINNER_DIV = (By.XPATH, "//span[contains(@class, 'eQNi4h96O1NXP1BYspBM')]")

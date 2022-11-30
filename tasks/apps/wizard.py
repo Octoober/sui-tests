@@ -21,7 +21,7 @@ class Wizard(TaskBase):
         self._url = url
         self._phrase = ''
 
-    def run_tasks(self):
+    def run_tasks(self, iteration: int = 0):
         self.connecting()
         self.minting()
 
@@ -44,3 +44,6 @@ class Wizard(TaskBase):
         mint_wizard_button.click()
 
         self.approve_task()
+
+        random_sleep(*RANDOM_SLEEP)
+        self.driver.switch_to.alert.accept()

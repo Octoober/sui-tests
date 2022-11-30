@@ -24,8 +24,9 @@ class Cleo(TaskBase):
         logger.info(f'init {self.__class__.__name__}')
         self._url = url
 
-    def run_tasks(self):
-        self.connecting()
+    def run_tasks(self, iteration: int = 0):
+        if iteration == 0:
+            self.connecting()
         self.minting()
 
     def connecting(self):

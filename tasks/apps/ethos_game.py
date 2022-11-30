@@ -5,7 +5,7 @@ from typing import NoReturn
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, ElementNotInteractableException
 from selenium.webdriver.common.keys import Keys
 
 from core.task import TaskBase
@@ -22,7 +22,7 @@ class EthosGame(TaskBase):
     def __init__(self, driver: WebDriver, url: str) -> NoReturn:
         super().__init__(driver)
         logger.info(f'init {self.__class__.__name__}')
-        self._url = url
+        self.url = url
         self._phrase = ''
         self._images = [
             'https://arweave.net/sv0csl4RG5ikMBuaACrvojm-EzcbTi-3ThScTTsVBdc',
@@ -35,17 +35,11 @@ class EthosGame(TaskBase):
             'https://arweave.net/QW9doLmmWdQ-7t8GZ85HtY8yzutoir8lGEJP9zOPQqA'
         ]
 
-    def open(self):
-        random_sleep(*RANDOM_SLEEP)
-        self._driver.get(self._url)
-        return self
-
-    def run_tasks(self):
-        self.get_started()
-        self.connect_sui()
-        # self.start_game()
-        self.claim()
-        self.approve()
+    def run_tasks(self, iteration: int = 0):
+        if iteration == 0:
+            self.get_started()
+            self.connecting()
+        self.mint()
 
     def get_started(self):
         logger.info('')
@@ -65,18 +59,18 @@ class EthosGame(TaskBase):
         except TimeoutException:
             logger.critical('get_started_button not found')
 
-    def connect_sui(self):
+    def connecting(self):
         try:
             connect_button = WebDriverWait(self._driver, 30).until(
                 EC.presence_of_element_located(ethos_game.CONNECT_SUI_BUTTON))
-            connect_button.click()
+            # connect_button.click()
+            self.driver.execute_script("arguments[0].click();", connect_button)
         except TimeoutException:
             logger.critical('connect button not found')
+        except ElementNotInteractableException:
+            logger.critical('element no interactive')
 
-        sui_popup = Popup(self._driver)
-        sui_popup.switch_to_popup_window()
-        sui_popup.click_connect()
-        sui_popup.switch_to_main_window()
+        self.connect_task()
 
     def start_game(self):
         """
@@ -113,7 +107,7 @@ class EthosGame(TaskBase):
 
             logger.info(f'number of steps: {count_iteration}')
 
-    def claim(self):
+    def mint(self):
         random_sleep(*RANDOM_SLEEP)
         try:
             claim_button = WebDriverWait(self._driver, 30).until(
@@ -122,9 +116,5 @@ class EthosGame(TaskBase):
         except TimeoutException:
             logger.critical('claim button not found')
 
-    def approve(self):
-        logger.info('approve nft')
-        sui_popup = Popup(self._driver)
-        sui_popup.switch_to_popup_window()
-        sui_popup.click_approve()
-        sui_popup.switch_to_main_window()
+        self.approve_task()
+

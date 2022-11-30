@@ -17,7 +17,16 @@ class TaskBase:
         self._driver: WebDriver = driver
 
         self._current_window = self._driver.current_window_handle
-        self._url: str = ''
+        self._url = ''
+        self._iteration = 0
+
+    @property
+    def iteration(self):
+        return self._iteration
+
+    @iteration.setter
+    def iteration(self, value: int):
+        self._iteration = value
 
     @property
     def driver(self) -> WebDriver:

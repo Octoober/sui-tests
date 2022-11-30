@@ -2,6 +2,7 @@ import itertools
 
 from tasks.sui.menu import Account, Network, Items
 from tasks.sui import UnlockWallet, NewAccount, WalletInfo
+from tasks.sui.sub_bar import Apps
 
 from apps import APPS
 from settings import COUNT, INTERVAL
@@ -43,8 +44,6 @@ def main():
         recovery_phrase = new_account.recovery_phrase_text
         wallet_hash = wallet_info.wallet_hash
 
-        save_wallet(wallet_hash, recovery_phrase)
-
         # Switch to testnet
         Network(driver).open().select_testnet()
 
@@ -52,11 +51,17 @@ def main():
         request_status = Items(driver).open().request_sui_tokens()
         logger.debug(f'requests status: {request_status}')
 
+        save_wallet(wallet_hash,
+                    recovery_phrase,
+                    'error' if not request_status else 'success')
+
         if request_status:
+            # Mint first nft
+            Apps(driver).open().mint_nft()
+
             random_sleep(5, 10)
-            for _ in range(7):
-                for app in APPS:
-                    app['worker'](driver, app['url']).open().run_tasks()
+            for app in APPS:
+                app['worker'](driver, app['url']).open().run_tasks()
 
         # Logout
         Account(driver).open().logout()

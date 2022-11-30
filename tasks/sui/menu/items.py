@@ -3,7 +3,7 @@ from typing import NoReturn
 from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import NoSuchElementException
 
 from core.task import TaskBase
 from utils.locations.sui import Menu
@@ -33,20 +33,20 @@ class Items(TaskBase):
 
         request_sui_tokens_button = WebDriverWait(self._driver, 10).until(
             EC.presence_of_element_located(Menu.REQUEST_SUI_TOKENS_BUTTON))
-
+        random_sleep(*RANDOM_SLEEP)
         request_sui_tokens_button.click()
 
-        progress_message = WebDriverWait(self._driver, 10).until(
-            EC.presence_of_element_located(Menu.REQUEST_IN_PROGRESS_DIV))
-        if 'Request limit' in progress_message.text:
-            logger.critical('request limit reached')
-            return False
+        status = self.request_token_message()
 
-        try:
-            WebDriverWait(self._driver, 120).until_not(
-                EC.presence_of_element_located(Menu.REQUEST_IN_PROGRESS_DIV))
-        except TimeoutException:
-            logger.critical('request sui tokens time out')
+        return status
 
-        return True
-
+    def request_token_message(self):
+        WebDriverWait(self._driver, 20).until(EC.presence_of_element_located(Menu.REQUEST_IN_PROGRESS_DIV))
+        while True:
+            try:
+                progress_message = self.driver.find_element(*Menu.REQUEST_IN_PROGRESS_DIV)
+                if 'limit' in progress_message.text:
+                    logger.error(progress_message.text)
+                    return False
+            except Exception:
+                return True

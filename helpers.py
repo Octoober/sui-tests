@@ -26,13 +26,14 @@ def create_default_wallets_file():
             json.dump(default_object, json_file)
 
 
-def save_wallet(wallet_hash: str, recovery_phrase: str):
+def save_wallet(wallet_hash: str, recovery_phrase: str, request_status: str):
     with open(WALLETS_JSON_FILE, 'r') as json_file:
         data = json.load(json_file)
 
     data['wallets'].append({
         "hash": wallet_hash,
-        "phrase": recovery_phrase
+        "phrase": recovery_phrase,
+        "request": request_status
     })
 
     with open(WALLETS_JSON_FILE, 'w') as json_file:
