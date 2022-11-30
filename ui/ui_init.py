@@ -17,17 +17,20 @@ class MainWindow(QWidget):
 
         wallets = get_wallets()
 
+        success_wallets_list = [item for item in wallets if 'request' in item and item['request'] == 'success']
+
         table = QTableWidget()
-        table.setRowCount(len(wallets))
+        table.setRowCount(len(success_wallets_list))
         table.setColumnCount(2)
 
         table.setHorizontalHeaderLabels(['Account', 'Recovery phrase'])
         header = table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeMode(1))
 
-        for row, wallet in enumerate(wallets):
-            for column, item in enumerate(wallet.values()):
-                table.setItem(row, column, QTableWidgetItem(item))
+        for row, wallet in enumerate(success_wallets_list):
+            if 'request' in wallet and wallet['request'] == 'success':
+                for column, item in enumerate(wallet.values()):
+                    table.setItem(row, column, QTableWidgetItem(item))
 
         v_box = QVBoxLayout()
         v_box.addWidget(table)
@@ -39,7 +42,7 @@ def init():
     app = QApplication([])
     window = MainWindow()
     window.showMaximized()
-    window.setMinimumSize(QSize(768, 550))
+    # window.setMinimumSize(QSize(768, 550))
     window.show()
 
     app.exec()

@@ -21,16 +21,6 @@ def main():
 
     close_last_window(driver)
 
-    # Unlock
-    # unlock_wallet = UnlockWallet(driver)
-    # unlock_wallet.unlock()
-    #
-    # logger.debug('wallet is lock' if unlock_wallet.is_locked_wallet else 'wallet unlock')
-    #
-    # if unlock_wallet.is_locked_wallet:
-    #     Account(driver).open().logout()
-    #     random_sleep(0.3, 1.5)
-
     count = range(COUNT) if COUNT > 0 else itertools.count(0)
 
     for _ in count:
